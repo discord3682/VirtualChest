@@ -28,12 +28,12 @@ class PluginInventory extends ContainerInventory
 
   protected $title;
 
-  public function __construct (Vector3 $vector, Player $player, string $title)
+  public function __construct (Player $player, string $title)
   {
     $this->title = $title;
     $this->player = $player;
 
-    parent::__construct ($vector);
+    parent::__construct ($player->asVector3 ());
   }
 
   public function getName () : string
