@@ -1,0 +1,5 @@
+name: VirtualChest
+main: discord3682\virtualchest\VirtualChest
+author: discord3682
+version: 0.0.1
+api: [3.0.0]
