@@ -64,7 +64,7 @@ class VirtualChest extends PluginBase
   public static function addVirtualChest (Player $player) : void
   {
     $data = self::$db [convert ($player)];
-    $inv = new PluginInventory ($player, $player, '§l§b[가상창고]§r');
+    $inv = new PluginInventory ($player, '§l§b[가상창고]§r');
 
     for ($i=0; $i<=$data [0]; $i++)
     {
