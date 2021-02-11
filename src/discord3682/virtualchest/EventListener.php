@@ -4,6 +4,7 @@ namespace discord3682\virtualchest;
 
 use discord3682\virtualchest\inventory\PluginInventory;
 use pocketmine\inventory\transaction\action\SlotChangeAction;
+use pocketmine\network\mcpe\protocol\ContainerClosePacket;
 use pocketmine\event\inventory\InventoryTransactionEvent;
 use pocketmine\event\server\DataPacketReceiveEvent;
 use pocketmine\event\player\PlayerJoinEvent;
@@ -15,6 +16,26 @@ use pocketmine\Player;
 
 class EventListener implements Listener
 {
+
+  public function onDataPacketReceive (DataPacketReceiveEvent $ev) : void
+  {
+		$pk = $ev->getPacket ();
+		$player = $ev->getPlayer ();
+
+		if ($pk instanceof ContainerClosePacket)
+    {
+			$inv = $player->getWindow ($pk->windowId);
+
+			if ($inv instanceof PluginInventory)
+      {
+				$pk = new ContainerClosePacket ();
+				$pk->windowId = $player->getWindowId ($inv);
+				$player->sendDataPacket ($pk);
+				$ev->setCancelled (true);
+				$inv->onClose ($player);
+			}
+		}
+	}
 
   public function onPlayerJoin (PlayerJoinEvent $ev) : void
   {
